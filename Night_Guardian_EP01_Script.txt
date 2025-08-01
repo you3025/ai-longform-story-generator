@@ -1,0 +1,286 @@
+Night Guardian EP.01 - The First Night
+YouTube Long-form Content Script
+
+=======================================
+Production Information
+=======================================
+Title: Night Guardian
+Genre: Comedy Thriller
+Duration: 6 minutes (First Chapter)
+Total Expected Duration: 60 minutes (10-12 chapters)
+Setting: St. Mary Hospital Emergency Room
+Time: One Night (11 PM ~ 5 AM)
+
+=======================================
+Characters
+=======================================
+Kim Do-hyun (35) - Security Guard/Protagonist
+- Current: Night security guard at St. Mary Hospital
+- Hidden Identity: Former cyber investigator, illegal filming specialist
+
+Park Min-ji (28) - Nurse
+- Current: Head nurse in emergency room
+- Hidden Identity: Do-hyun's ex-girlfriend, past victim of illegal filming
+
+Choi Woo-jin (42) - Doctor
+- Current: Emergency medicine chief
+- Hidden Identity: Actually an undercover journalist
+
+Lee So-young (24) - Intern
+- Current: 1st year nursing intern
+- Hidden Identity: Do-hyun's younger sister, attempting revenge due to misunderstanding
+
+=======================================
+5-Stage Plot Twist Structure
+=======================================
+Twist 1: Do-hyun's identity as former police officer revealed
+Twist 2: Past relationship with Min-ji related to a case
+Twist 3: Woo-jin confesses he's a journalist investigating illegal filming
+Twist 4: So-young realizes she's Do-hyun's sister
+Twist 5: Real culprit is someone else (hospital cleaning staff)
+
+=======================================
+First Chapter Complete Script
+=======================================
+
+==================
+Opening (0:00-0:30)
+==================
+
+[Scene: Dark hospital corridor. Fluorescent lights flicker creating an unsettling atmosphere]
+
+Narration (Do-hyun's voice): 
+"When people sleep, someone must stay awake. 
+From today, that someone is... me."
+
+[Title Card: "Night Guardian"]
+
+========================
+Scene 1: First Shift Begins (0:30-1:30)
+========================
+
+[Scene: St. Mary Hospital security office. Do-hyun adjusts his tie while looking in the mirror, wearing an old uniform]
+
+Do-hyun: (to himself) 
+"Kim Do-hyun, you can do this. It's just security work."
+
+[Security office door opens as the previous shift guard, Guard Park, enters]
+
+Guard Park: 
+"The replacement is here. You're Kim Do-hyun, right?"
+
+Do-hyun: 
+"Yes, hello!"
+
+Guard Park: (with tired expression) 
+"First time on night shift? Nothing much. Check CCTV, patrol, lock doors... but."
+
+Do-hyun: 
+"Yes?"
+
+Guard Park: (meaningfully) 
+"This hospital has some... peculiar things happening at night. Don't dig too deep. You understand?"
+
+[Guard Park leaves while Do-hyun looks confused]
+
+Do-hyun: 
+"Peculiar things?"
+
+========================
+Scene 2: Emergency Room Commotion (1:30-3:00)
+========================
+
+[Scene: Emergency room. Min-ji is organizing charts. Suddenly, ambulance siren sounds]
+
+Min-ji: (into radio) 
+"Emergency room, patient incoming!"
+
+[Emergency room doors open as a patient on a stretcher is brought in. The patient is unconscious with strange wounds]
+
+Paramedic: 
+"Male in his 30s, unconscious, unknown cause laceration!"
+
+Woo-jin: (running over) 
+"What are the vitals?"
+
+Paramedic: 
+"Blood pressure 90/60, weak pulse, but the strange thing is..."
+
+Min-ji: (looking at patient in surprise) 
+"These wounds... something's odd."
+
+[So-young runs over, breathing heavily]
+
+So-young: 
+"Sorry! I'm late!"
+
+Woo-jin: (coldly) 
+"Intern, do you know what time it is?"
+
+So-young: 
+"I'm sorry, doctor..."
+
+========================
+Scene 3: Do-hyun's First Patrol (3:00-4:30)
+========================
+
+[Scene: Hospital corridor. Do-hyun walks with a flashlight on patrol]
+
+Do-hyun: (looking at checklist) 
+"First floor corridor check, second floor patient room check..."
+
+[Suddenly, strange sounds are heard from somewhere]
+
+Do-hyun: 
+"What's that?"
+
+[Following the sound, he arrives near the emergency room. He encounters Min-ji coming out of the emergency room]
+
+Min-ji: (startled) 
+"Oh! You scared me. You're the new security guard, right?"
+
+Do-hyun: (awkwardly) 
+"Yes, I'm Kim Do-hyun. Did you hear that strange sound just now..."
+
+Min-ji: 
+"Oh, it's nothing. Just medical equipment sounds."
+
+[But Min-ji's expression looks anxious]
+
+Do-hyun: 
+"Is something wrong...?"
+
+Min-ji: (speaking quickly) 
+"Really, it's nothing. Continue your patrol."
+
+[Min-ji hurries back into the emergency room. Do-hyun watches with suspicious eyes]
+
+========================
+Scene 4: Suspicious Patient (4:30-5:30)
+========================
+
+[Scene: Inside emergency room. Woo-jin is examining the patient]
+
+Woo-jin: (to So-young) 
+"First time seeing wounds like this?"
+
+So-young: 
+"Yes... it's not a knife cut, not an animal bite..."
+
+Min-ji: (entering) 
+"CT results are in."
+
+Woo-jin: (looking at CT in surprise) 
+"What is this..."
+
+[All three look at the CT scan in bewilderment]
+
+So-young: 
+"Doctor, this isn't normal."
+
+Woo-jin: (seriously) 
+"Don't tell anyone. Especially not the security guard."
+
+[Sound of Do-hyun passing by outside. The three become quiet]
+
+Min-ji: (whispering) 
+"That guy is suspicious. He walks around too much."
+
+Woo-jin: 
+"Be careful. This can't get out."
+
+========================
+Scene 5: First Clue (5:30-6:00)
+========================
+
+[Scene: Security office. Do-hyun is checking CCTV]
+
+Do-hyun: (looking at monitor) 
+"Something's strange..."
+
+[On CCTV screen, a strange shadow passes before the patient arrived]
+
+Do-hyun: 
+"What's this?"
+
+[He tries to replay the video but the screen gets noisy]
+
+Do-hyun: 
+"Is it broken?"
+
+[Suddenly the security office door opens and Min-ji enters]
+
+Min-ji: 
+"Do-hyun, are you okay?"
+
+Do-hyun: (surprised) 
+"Yes? Oh, yes. I'm fine."
+
+Min-ji: (intentionally) 
+"It's hard on your first day, isn't it? Would you like a cup of coffee?"
+
+Do-hyun: (suspiciously) 
+"Thank you, but... why suddenly?"
+
+Min-ji: (smiling) 
+"Just because. It's going to be a long night."
+
+[Min-ji leaves with a meaningful smile. Do-hyun becomes more suspicious]
+
+[Cliffhanger: Suddenly the power goes out and the hospital is plunged into darkness]
+
+Do-hyun: 
+"What the...?"
+
+[End credits: "To be continued..."]
+
+=======================================
+Production Notes
+=======================================
+
+Comedy Elements:
+- Do-hyun's clumsy handling of security equipment
+- Struggles with automatic doors
+- Min-ji's misunderstanding about Do-hyun
+- Woo-jin's avoidance behavior
+
+Tension Building:
+- Mysterious patient with strange wounds
+- Suspicious CCTV footage
+- Medical staff's secretive behavior
+- Cliffhanger ending with power outage
+
+Foreshadowing Elements:
+- Guard Park's mention of "peculiar things"
+- Do-hyun's professional observation skills
+- Min-ji's anxious expression
+- Woo-jin's suspicious behavior
+
+=======================================
+Next Episode Preview
+=======================================
+
+In Chapter 2, chaos unfolds during the power outage as 
+Do-hyun's true identity begins to be revealed.
+The first twist - "Do-hyun is a former police officer" - 
+will be exposed by Min-ji, and it becomes clear that 
+the incidents happening in the hospital are not mere accidents.
+
+=======================================
+Generation Information
+=======================================
+This script was automatically generated by AI Story Generator.
+
+Generation Conditions:
+- Genre: Comedy (randomly selected)
+- Setting: Hospital Emergency Room (randomly selected)
+- Occupation: Security Guard (randomly selected)
+- Issue: Illegal Filming (randomly selected)
+
+This is one result out of 25,200 possible combinations.
+
+Generation Date: August 2, 2025
+AI Model: Claude Sonnet 4
+Generation Time: Approximately 5 minutes
+
+=======================================

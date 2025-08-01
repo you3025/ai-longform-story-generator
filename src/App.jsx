@@ -794,16 +794,6 @@ ${mode === 'advanced' ? `- ${narrativeStyles.find(n => n.value === storyData.set
             </div>
           </div>
         )}
-                <div>
-                  <div className="text-pink-400 font-bold text-lg">
-                    {mode === 'simple' ? '랜덤' : '커스텀'}
-                  </div>
-                  <div className="text-gray-400">생성 모드</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* 푸터 */}
         <footer className="mt-12 text-center text-gray-400 text-sm">

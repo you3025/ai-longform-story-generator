@@ -1,11 +1,43 @@
 import React, { useState } from 'react';
-import { Play, Download, FileText, Settings, Zap, BookOpen, Users, Clock, AlertCircle, Shuffle, Sliders } from 'lucide-react';
+import { Play, Download, FileText, Settings, Zap, BookOpen, Users, Clock, AlertCircle, Shuffle, Sliders, Key, X } from 'lucide-react';
 
 const App = () => {
   const [currentStep, setCurrentStep] = useState(0); // 0: 모드 선택, 1: 설정, 2: 컨셉, 3: 플롯, 4: 완성
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState('');
   const [mode, setMode] = useState(''); // 'simple' or 'advanced'
+  const [showApiModal, setShowApiModal] = useState(false);
+  // localStorage 안전 처리 (artifacts 환경 호환)
+  const getStoredApiKey = () => {
+    try {
+      return typeof localStorage !== 'undefined' ? localStorage.getItem('anthropic_api_key') || '' : '';
+    } catch {
+      return '';
+    }
+  };
+
+  const setStoredApiKey = (key) => {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('anthropic_api_key', key);
+      }
+    } catch {
+      // localStorage를 사용할 수 없는 환경에서는 무시
+    }
+  };
+
+  const removeStoredApiKey = () => {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem('anthropic_api_key');
+      }
+    } catch {
+      // localStorage를 사용할 수 없는 환경에서는 무시
+    }
+  };
+
+  const [apiKey, setApiKey] = useState(getStoredApiKey());
+  const [tempApiKey, setTempApiKey] = useState('');
   const [storyData, setStoryData] = useState({
     concept: '',
     plot: '',
@@ -63,36 +95,6 @@ const App = () => {
     '복수와 용서', '정체성과 자아찾기', '가족의 비밀', '사회적 불의', '트라우마 극복',
     '진실과 거짓', '권력과 부패', '사랑과 배신', '꿈과 현실', '과거와 현재'
   ];
-  // Claude API 호출 함수
-  const callClaudeAPI = async (prompt) => {
-    try {
-      setError('');
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 4000,
-          messages: [
-            { role: "user", content: prompt }
-          ]
-        })
-      });
-      
-      if (!response.ok) {
-        throw new Error(`API 호출 실패: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      return data.content[0].text;
-    } catch (error) {
-      console.error("Claude API 호출 오류:", error);
-      setError(`API 호출 중 오류가 발생했습니다: ${error.message}`);
-      throw error;
-    }
-  };
 
   // 모드 선택 함수
   const selectMode = (selectedMode) => {
@@ -111,6 +113,65 @@ const App = () => {
         theme: ''
       }
     }));
+  };
+
+  // API 키 관리 함수들
+  const openApiModal = () => {
+    setTempApiKey(apiKey);
+    setShowApiModal(true);
+  };
+
+  const closeApiModal = () => {
+    setShowApiModal(false);
+    setTempApiKey('');
+  };
+
+  const saveApiKey = () => {
+    setApiKey(tempApiKey);
+    setStoredApiKey(tempApiKey);
+    setShowApiModal(false);
+    setTempApiKey('');
+  };
+
+  const clearApiKey = () => {
+    setApiKey('');
+    removeStoredApiKey();
+    setShowApiModal(false);
+    setTempApiKey('');
+  };
+
+  // API 호출 함수 (공통)
+  const callAnthropicAPI = async (prompt) => {
+    if (!apiKey.trim()) {
+      throw new Error('API 키가 설정되지 않았습니다. 설정 버튼을 클릭해서 API 키를 입력해주세요.');
+    }
+
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01"
+      },
+      body: JSON.stringify({
+        model: "claude-3-sonnet-20240229",
+        max_tokens: 2000,
+        messages: [
+          { role: "user", content: prompt }
+        ]
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      if (response.status === 401) {
+        throw new Error('API 키가 유효하지 않습니다. 설정에서 올바른 API 키를 입력해주세요.');
+      }
+      throw new Error(`API 호출 실패: ${errorData.error?.message || response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.content[0].text;
   };
 
   // 간단 모드 - 1단계: 스토리 컨셉 생성 (랜덤)
@@ -152,7 +213,7 @@ const App = () => {
 
 위 조건으로 완전히 새로운 스토리 컨셉을 간단명료하게 제시해줘.`;
 
-      const result = await callClaudeAPI(prompt);
+      const result = await callAnthropicAPI(prompt);
       setStoryData(prev => ({ 
         ...prev, 
         concept: result, 
@@ -212,7 +273,7 @@ ${storyData.settings.timeStructure === 'linear' ? '현재 상황 → 점진적 �
 
 위 조건으로 정교하고 복합적인 스토리 컨셉을 제시해줘.`;
 
-      const result = await callClaudeAPI(prompt);
+      const result = await callAnthropicAPI(prompt);
       setStoryData(prev => ({ ...prev, concept: result }));
       setCurrentStep(2);
     } catch (error) {
@@ -257,7 +318,7 @@ ${storyData.concept}
 
 각 챕터의 제목, 주요 내용, 반전 포인트를 상세히 정리해서 제시해줘.`;
 
-      const result = await callClaudeAPI(prompt);
+      const result = await callAnthropicAPI(prompt);
       setStoryData(prev => ({ ...prev, plot: result }));
       setCurrentStep(3);
     } catch (error) {
@@ -307,7 +368,7 @@ ${mode === 'advanced' ?
 
 첫 번째 챕터를 완성도 높게 작성해줘.`;
 
-      const result = await callClaudeAPI(prompt);
+      const result = await callAnthropicAPI(prompt);
       setStoryData(prev => ({ 
         ...prev, 
         chapters: [{ id: 1, title: '1. 시작', content: result }] 
@@ -445,7 +506,16 @@ ${mode === 'advanced' ? `- ${narrativeStyles.find(n => n.value === storyData.set
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4">
       <div className="max-w-6xl mx-auto">
         {/* 헤더 */}
-        <div className="text-center mb-8 fade-in">
+        <div className="text-center mb-8 fade-in relative">
+          {/* API 키 설정 버튼 */}
+          <button
+            onClick={openApiModal}
+            className="absolute top-0 right-0 p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+            title="API 키 설정"
+          >
+            <Settings size={20} />
+          </button>
+          
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2 flex items-center justify-center gap-3">
             <BookOpen className="text-yellow-400" />
             롱폼 스토리 생성기
@@ -455,6 +525,14 @@ ${mode === 'advanced' ? `- ${narrativeStyles.find(n => n.value === storyData.set
             {currentStep === 0 ? '모드 선택 • 간단 vs 고급' : 
              mode === 'simple' ? '간단 모드 • 랜덤 조합 • 빠른 생성' : 
              '고급 모드 • 커스텀 설정 • 정교한 구조'}
+          </div>
+          
+          {/* API 키 상태 표시 */}
+          <div className="mt-2 flex items-center justify-center gap-2 text-xs">
+            <div className={`w-2 h-2 rounded-full ${apiKey ? 'bg-green-400' : 'bg-red-400'}`}></div>
+            <span className={apiKey ? 'text-green-400' : 'text-red-400'}>
+              {apiKey ? 'API 연결됨' : 'API 키 미설정'}
+            </span>
           </div>
         </div>
 
@@ -824,6 +902,74 @@ ${mode === 'advanced' ? `- ${narrativeStyles.find(n => n.value === storyData.set
             </div>
           </div>
         </footer>
+
+        {/* API 키 설정 모달 */}
+        {showApiModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-gray-800 rounded-lg max-w-md w-full p-6 border border-gray-700">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                  <Key size={20} className="text-yellow-400" />
+                  API 키 설정
+                </h3>
+                <button
+                  onClick={closeApiModal}
+                  className="text-gray-400 hover:text-white p-1"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              
+              <div className="mb-4">
+                <p className="text-gray-300 text-sm mb-3">
+                  Claude API를 사용하기 위해 Anthropic API 키를 입력해주세요.
+                </p>
+                <div className="space-y-2 text-xs text-gray-400">
+                  <p>• API 키는 세션 동안 안전하게 보관됩니다</p>
+                  <p>• <a href="https://console.anthropic.com/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Anthropic Console</a>에서 발급받을 수 있습니다</p>
+                  <p>• sk-ant-api03-로 시작하는 키를 입력하세요</p>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  API 키
+                </label>
+                <input
+                  type="password"
+                  value={tempApiKey}
+                  onChange={(e) => setTempApiKey(e.target.value)}
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none"
+                  placeholder="sk-ant-api03-..."
+                />
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={saveApiKey}
+                  disabled={!tempApiKey.trim()}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                >
+                  저장
+                </button>
+                {apiKey && (
+                  <button
+                    onClick={clearApiKey}
+                    className="px-4 py-2 text-red-400 hover:text-red-300 border border-red-400/30 hover:border-red-300/50 rounded-lg transition-colors"
+                  >
+                    삭제
+                  </button>
+                )}
+                <button
+                  onClick={closeApiModal}
+                  className="px-4 py-2 text-gray-400 hover:text-gray-300 border border-gray-600 hover:border-gray-500 rounded-lg transition-colors"
+                >
+                  취소
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

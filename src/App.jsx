@@ -142,10 +142,13 @@ const App = () => {
 
   // API 호출 함수 (공통)
   const callAnthropicAPI = async (prompt) => {
+    console.log('🔑 API 키 확인:', apiKey ? `설정됨 (${apiKey.substring(0, 15)}...)` : '미설정');
+    
     if (!apiKey.trim()) {
       throw new Error('API 키가 설정되지 않았습니다. 설정 버튼을 클릭해서 API 키를 입력해주세요.');
     }
 
+    console.log('📡 API 호출 시작...');
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
@@ -162,8 +165,11 @@ const App = () => {
       })
     });
 
+    console.log('📡 응답 상태:', response.status);
+
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
+      console.error('❌ API 에러:', errorData);
       if (response.status === 401) {
         throw new Error('API 키가 유효하지 않습니다. 설정에서 올바른 API 키를 입력해주세요.');
       }
@@ -171,11 +177,13 @@ const App = () => {
     }
 
     const data = await response.json();
+    console.log('✅ API 성공, 응답 길이:', data.content[0].text.length);
     return data.content[0].text;
   };
 
   // 간단 모드 - 1단계: 스토리 컨셉 생성 (랜덤)
   const generateSimpleConcept = async () => {
+    console.log('🎬 간단 모드 컨셉 생성 시작');
     setIsGenerating(true);
     setError('');
     
@@ -184,6 +192,8 @@ const App = () => {
       const randomBackground = backgrounds[Math.floor(Math.random() * backgrounds.length)];
       const randomJob = jobs[Math.floor(Math.random() * jobs.length)];
       const randomIssue = issues[Math.floor(Math.random() * issues.length)];
+
+      console.log('🎲 랜덤 선택:', { randomGenre, randomBackground, randomJob, randomIssue });
 
       const prompt = `창의적이고 독창적인 롱폼 유튜브 스토리 컨셉을 만들어줘.
 
@@ -227,7 +237,8 @@ const App = () => {
       }));
       setCurrentStep(2);
     } catch (error) {
-      console.error('스토리 생성 오류:', error);
+      console.error('❌ 스토리 생성 오류:', error);
+      setError(`스토리 생성 실패: ${error.message}`);
     } finally {
       setIsGenerating(false);
     }
@@ -277,7 +288,8 @@ ${storyData.settings.timeStructure === 'linear' ? '현재 상황 → 점진적 �
       setStoryData(prev => ({ ...prev, concept: result }));
       setCurrentStep(2);
     } catch (error) {
-      console.error('스토리 생성 오류:', error);
+      console.error('❌ 스토리 생성 오류:', error);
+      setError(`스토리 생성 실패: ${error.message}`);
     } finally {
       setIsGenerating(false);
     }
@@ -322,7 +334,8 @@ ${storyData.concept}
       setStoryData(prev => ({ ...prev, plot: result }));
       setCurrentStep(3);
     } catch (error) {
-      console.error('플롯 생성 오류:', error);
+      console.error('❌ 플롯 생성 오류:', error);
+      setError(`플롯 생성 실패: ${error.message}`);
     } finally {
       setIsGenerating(false);
     }
@@ -375,7 +388,8 @@ ${mode === 'advanced' ?
       }));
       setCurrentStep(4);
     } catch (error) {
-      console.error('챕터 생성 오류:', error);
+      console.error('❌ 챕터 생성 오류:', error);
+      setError(`챕터 생성 실패: ${error.message}`);
     } finally {
       setIsGenerating(false);
     }
